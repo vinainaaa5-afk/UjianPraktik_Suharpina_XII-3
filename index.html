@@ -1,100 +1,165 @@
-<!DOCTYPE html>
-<html lang="en" data-bs-theme="light">
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
-        <div class="container">
-            <button class="btn btn-dark" id="darkModeToggle">Toggle Dark Mode</button>
-        </div>
-    </nav>
-    
-    <section class="container my-5" id="testimonials">
-        <h2 class="text-center mb-4">Apa Kata Mereka?</h2>
-        <div class="row" id="testimonial-list">
-            <p class="text-center text-muted">Memuat testimonial...</p>
-        </div>
-    </section>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="app.js"></script>
-</body>
-</html>
-
-document.addEventListener('DOMContentLoaded', () => {
-    const toggleButton = document.getElementById('darkModeToggle');
-    const htmlElement = document.documentElement; // <html> tag
-
-    // 1. Fungsi untuk mengatur tema
-    function setTheme(theme) {
-        htmlElement.setAttribute('data-bs-theme', theme);
-        localStorage.setItem('theme', theme);
-        toggleButton.textContent = theme === 'dark' ? 'Toggle Light Mode' : 'Toggle Dark Mode';
-    }
-
-    // 2. Cek tema tersimpan di Local Storage atau default ke 'light'
-    const storedTheme = localStorage.getItem('theme') || 'light';
-    setTheme(storedTheme);
-
-    // 3. Listener untuk tombol toggle
-    toggleButton.addEventListener('click', () => {
-        const currentTheme = htmlElement.getAttribute('data-bs-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        setTheme(newTheme);
-    });
-});
-        // Inisialisasi Supabase (GANTI DENGAN KUNCI ANDA)
-const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-async function fetchTestimonials() {
-    const listElement = document.getElementById('testimonial-list');
-    listElement.innerHTML = ''; // Hapus pesan 'memuat'
-
-    try {
-        const { data: testimonials, error } = await supabase
-            .from('testimonials')
-            .select('*')
-            .order('created_at', { ascending: false }); // Urutkan terbaru
-
-        if (error) throw error;
-
-        if (testimonials && testimonials.length > 0) {
-            testimonials.forEach(testimonial => {
-                const col = document.createElement('div');
-                col.className = 'col-lg-4 col-md-6 mb-4';
-
-                // Gunakan kelas Bootstrap Card untuk styling elegan
-                col.innerHTML = `
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="card-body">
-                            <blockquote class="blockquote mb-0">
-                                <p>"${testimonial.content}"</p>
-                                <footer class="blockquote-footer mt-2">
-                                    ${testimonial.name}
-                                </footer>
-                            </blockquote>
-                        </div>
-                    </div>
-                `;
-                listElement.appendChild(col);
-            });
-        } else {
-             listElement.innerHTML = '<p class="text-center text-muted">Belum ada testimonial.</p>';
-        }
-
-    } catch (e) {
-        console.error('Error fetching testimonials:', e);
-        listElement.innerHTML = `<p class="text-center text-danger">Gagal memuat data: ${e.message}</p>`;
-    }
+/* Variabel Warna untuk Estetika Bersih */
+:root {
+    --primary-color: #333333;       /* Teks utama, gelap */
+    --accent-color: #A0522D;        /* Warna Aksen (cokelat muda/sienna) */
+    --background-light: #F8F8F8;    /* Background sangat terang */
+    --background-white: #FFFFFF;    /* Background putih murni */
+    --text-muted: #666666;          /* Teks sekunder */
 }
 
-// Panggil fungsi saat aplikasi dimuat
-// fetchTestimonials(); // Uncomment ini setelah Anda mengganti URL/KEY
+/* Pengaturan Font Global */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-light);
+    color: var(--primary-color);
+    padding-top: 56px; /* Spasi untuk fixed-top navbar */
+}
 
-        
+/* --- Navigasi --- */
+.custom-navbar {
+    background-color: var(--background-white) !important;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05); /* Shadow lembut */
+}
+
+.custom-navbar .navbar-brand {
+    color: var(--primary-color) !important;
+    font-weight: 700;
+}
+
+.custom-navbar .nav-link {
+    color: var(--primary-color) !important;
+    margin-left: 15px;
+    font-weight: 400;
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link.active {
+    color: var(--accent-color) !important; /* Aksen saat hover/aktif */
+    border-bottom: 2px solid var(--accent-color);
+}
+
+/* --- Bagian Hero --- */
+.custom-hero {
+    min-height: 100vh;
+    background-color: var(--background-white);
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.custom-name {
+    color: var(--accent-color);
+    letter-spacing: 2px;
+}
+
+.custom-desc {
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+.custom-btn {
+    background-color: var(--accent-color);
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+    background-color: #8B4513; /* Warna sedikit lebih gelap dari sienna */
+    color: white;
+}
+
+/* --- Bagian Umum & Heading --- */
+.custom-section {
+    padding: 80px 0;
+    background-color: var(--background-white);
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.custom-bg-light {
+    background-color: var(--background-light);
+}
+
+.custom-heading {
+    color: var(--primary-color);
+}
+
+.custom-text {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+
+.custom-text-muted {
+    color: var(--text-muted);
+}
+
+/* --- Foto Profil (Estetika Simpel) --- */
+.custom-profile-pic {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background-color: #EFEFEF; 
+    border: 3px solid var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 1rem;
+    overflow: hidden; 
+}
+
+/* --- Kartu Portofolio --- */
+.custom-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+}
+
+.custom-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.custom-project-image-placeholder {
+    height: 180px;
+    background-color: #E5E5E5; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-weight: 600;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.custom-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.custom-link:hover {
+    text-decoration: underline;
+    color: var(--accent-color);
+}
+
+/* --- Tombol Kontak Sekunder --- */
+.custom-btn-secondary {
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+    padding: 12px 35px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.custom-btn-secondary:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* --- Footer --- */
+.custom-footer {
+    background-color: var(--background-white);
+    border-top: 1px solid #EEEEEE;
+}
