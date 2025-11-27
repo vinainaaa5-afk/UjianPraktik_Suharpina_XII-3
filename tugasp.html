@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CapCut - Editor Video Populer</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Google Fonts (Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Kustom -->
+    <style>
+        :root {
+            --primary-color: #25F4EE; /* Cyan CapCut */
+            --secondary-color: #FE2C55; /* Pink CapCut */
+            --dark-bg: #141414;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+        }
+
+        /* --- Smooth Scrolling --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* --- Navbar Styling --- */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .navbar-nav .nav-link {
+            color: #555 !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        .btn-download-nav {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-download-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(254, 44, 85, 0.3);
+            color: white;
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 150px 0 80px 0;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero-img {
+            max-width: 100%;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .btn-hero {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 50px;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary-hero {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-primary-hero:hover {
+            background-color: #e01a48;
+            border-color: #e01a48;
+            transform: translateY(-3px);
+        }
+
+        .btn-outline-hero {
+            border-color: white;
+            color: white;
+        }
+
+        .btn-outline-hero:hover {
+            background-color: white;
+            color: #764ba2;
+        }
+
+        /* --- Section Styling --- */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        /* --- Features Section --- */
+        .feature-box {
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        /* --- Templates Section --- */
+        #templates {
+            background-color: var(--light-bg);
+        }
+
+        .template-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .template-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .template-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* --- Download Section --- */
+        #download {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        #download .section-title {
+            color: white;
+        }
+
+        #download .section-title::after {
+            background: white;
+        }
+
+        .app-badge {
+            max-width: 180px;
+            margin: 10px;
+            transition: transform 0.3s;
+        }
+
+        .app-badge:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--dark-bg);
+            color: #aaa;
+            padding: 50px 0 20px 0;
+        }
+
+        footer h5 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer ul li {
+            margin-bottom: 10px;
+        }
+
+        footer ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--secondary-color);
+        }
+
+        footer hr {
+            border-color: #444;
+            margin-top: 30px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- === NAVBAR === -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">CapCut</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Fitur</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#templates">Template</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#download">Unduh</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="btn btn-download-nav" href="#download">Unduh Sekarang</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- === HERO SECTION === -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1>Edit Video Anda dengan Mudah & Keren</h1>
+                    <p>CapCut adalah editor video gratis yang memudahkan Anda membuat video berkualitas tinggi dengan efek, musik, dan template tren.</p>
+                    <a href="#download" class="btn btn-primary-hero btn-hero">Mulai Sekarang</a>
+                    <a href="#features" class="btn btn-outline-hero btn-hero">Pelajari Lebih Lanjut</a>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <!-- GANTI DENGAN SCREENSHOT APLIKASI ANDA -->
+                    <img src="cpct.png" alt="Aplikasi CapCut" class="hero-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === FEATURES SECTION === -->
+    <section id="features" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Fitur Unggulan</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <div class="feature-icon"><i class="fas fa-magic"></i></div>
+                        <h5>Efek & Filter Trendi</h5>
+                        <p>Jelajahi ribuan efek, filter, dan transisi keren untuk membuat video Anda menonjol.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <div class="feature-icon"><i class="fas fa-music"></i></div>
+                        <h5>Perpustakaan Musik</h5>
+                        <p>Akses ke koleksi musik populer dan efek suara yang bebas hak cipta untuk video Anda.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <div class="feature-icon"><i class="fas fa-closed-captioning"></i></div>
+                        <h5>Keterangan Otomatis</h5>
+                        <p>Hasilkan teks dan subtitle untuk video Anda secara otomatis dengan teknologi AI.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === TEMPLATES SECTION === -->
+    <section id="templates" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Template Siap Pakai</h2>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="template-card">
+                        <img src="jj cp.jpeg" alt="Template Vlog">
+                        <div class="card-body">
+                            <h5 class="card-title">Da Da da da sayonara</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="template-card">
+                        <img src="jj cp2.jpeg" alt="Template TikTok">
+                        <div class="card-body">
+                            <h5 class="card-title">3:4 KANE NIH</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="template-card">
+                        <img src="jj cp3.jpeg" alt="Template Produk">
+                        <div class="card-body">
+                            <h5 class="card-title">Foto live</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === DOWNLOAD SECTION === -->
+    <section id="download" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Unduh CapCut Sekarang</h2>
+            <p class="lead">Tersedia gratis untuk iOS dan Android. Mulai ciptakan video Anda!</p>
+            <!-- GANTI DENGAN LINK DOWNLOAD ANDA -->
+            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Download on Google Play" class="app-badge"></a>
+            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store" class="app-badge"></a>
+        </div>
+    </section>
+
+    <!-- === FOOTER === -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <h5>CapCut</h5>
+                    <p>Editor video all-in-one untuk semua kreator konten.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <h5>Produk</h5>
+                    <ul>
+                        <li><a href="#">Fitur</a></li>
+                        <li><a href="#">Template</a></li>
+                        <li><a href="#">Tutorial</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h5>Perusahaan</h5>
+                    <ul>
+                        <li><a href="#">Tentang Kami</a></li>
+                        <li><a href="#">Karir</a></li>
+                        <li><a href="#">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Dukungan</h5>
+                    <ul>
+                        <li><a href="#">Pusat Bantuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2024 CapCut. All Rights Reserved. (This is a demo website)</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
